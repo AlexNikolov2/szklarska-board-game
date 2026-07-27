@@ -13,26 +13,38 @@ import {
 import type { BoardSquare, Player } from '@/game/types'
 
 /* ---------------------------------------------------------------------
-   The board itself: a straight snail path laid out on a CSS grid.
-   Path order is decoupled from DOM order — every tile is positioned
-   explicitly, so changing `columns` reflows the whole snail.
+   The board: a snake path laid out on a CSS grid — right, up, left, up,
+   right — capped by round START and FINISH discs. Path order is
+   decoupled from DOM order, so changing `columns` reflows the snake.
    --------------------------------------------------------------------- */
 
 export type BoardProps = {
     squares: BoardSquare[]
     players?: Player[]
     activeSquareId?: number | null
-    completedSquareIds?: number[]
+    visitedSquareIds?: number[]
     columns?: number
     onSquareSelect?: (square: BoardSquare) => void
     className?: string
+}
+
+function PawnRow({ players }: { players: Player[] }) {
+    if (players.length === 0) return null
+
+    return (
+        <span className="absolute -bottom-1.5 flex gap-0.5">
+            {players.map((player) => (
+                <Pawn key={player.id} seat={player.seat} name={player.name} />
+            ))}
+        </span>
+    )
 }
 
 export function Board({
     squares,
     players = [],
     activeSquareId = null,
-    completedSquareIds = [],
+    visitedSquareIds = [],
     columns = BOARD_CONFIG.columns,
     onSquareSelect,
     className,
@@ -41,8 +53,7 @@ export function Board({
     const rows = getRowCount(total, columns)
     const start = getStartPlacement(columns, total)
     const finish = getFinishPlacement(columns, total)
-
-    const completed = new Set(completedSquareIds)
+    const visited = new Set(visitedSquareIds)
 
     return (
         <div
@@ -63,17 +74,18 @@ export function Board({
                     kind="start"
                     label={BOARD_CONFIG.startLabel}
                     style={{ gridRow: start.gridRow, gridColumn: start.gridColumn }}
-                />
+                >
+                    <PawnRow players={players.filter((p) => p.position < 0)} />
+                </Terminal>
 
                 {squares.map((square, index) => {
                     const placement = getPlacement(index, columns, total)
                     const state: SquareState =
                         square.id === activeSquareId
                             ? 'active'
-                            : completed.has(square.id)
-                                ? 'done'
+                            : visited.has(square.id)
+                                ? 'visited'
                                 : 'idle'
-                    const here = players.filter((p) => p.position === index)
 
                     return (
                         <Square
@@ -88,17 +100,7 @@ export function Board({
                                 gridColumn: placement.gridColumn,
                             }}
                         >
-                            {here.length > 0 && (
-                                <span className="absolute -bottom-1.5 flex gap-0.5">
-                                    {here.map((player) => (
-                                        <Pawn
-                                            key={player.id}
-                                            seat={players.indexOf(player)}
-                                            name={player.name}
-                                        />
-                                    ))}
-                                </span>
-                            )}
+                            <PawnRow players={players.filter((p) => p.position === index)} />
                         </Square>
                     )
                 })}

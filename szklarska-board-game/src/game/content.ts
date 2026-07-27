@@ -1,134 +1,189 @@
-import type { BoardSquare, Question } from "./types";
+import type { Difficulty, Question } from "./types";
 
 /* =====================================================================
-   BOARD CONTENT
+   QUESTION BANK
    ---------------------------------------------------------------------
-   Pure data. Swap these arrays to change the game without touching a
-   single component. Square count only has to be a multiple of
-   BOARD_CONFIG.columns if you want perfectly full rows.
+   Grouped by difficulty. Add entries freely — the engine draws from
+   whatever is here and never repeats a question within a game.
    ===================================================================== */
 
-export const BOARD_SQUARES: BoardSquare[] = [
-  { id: 0, category: "idea", label: "Spot a problem" },
-  { id: 1, category: "market", label: "Talk to 5 users" },
-  { id: 2, category: "idea", label: "Value proposition" },
-  { id: 3, category: "chance", label: "Chance", bonus: 1 },
-  { id: 4, category: "finance", label: "Bootstrap budget" },
-  { id: 5, category: "team", label: "Find a co-founder" },
-  { id: 6, category: "risk", label: "Register the company" },
-  { id: 7, category: "market", label: "First landing page" },
-  { id: 8, category: "idea", label: "Build an MVP" },
-  { id: 9, category: "finance", label: "Price the product" },
-  { id: 10, category: "chance", label: "Chance", bonus: -1 },
-  { id: 11, category: "market", label: "First paying client" },
-  { id: 12, category: "risk", label: "Sign a contract" },
-  { id: 13, category: "team", label: "First hire" },
-  { id: 14, category: "finance", label: "Cash-flow crunch", bonus: -1 },
-  { id: 15, category: "growth", label: "Product-market fit" },
-  { id: 16, category: "market", label: "Acquisition channel" },
-  { id: 17, category: "chance", label: "Chance", bonus: 2 },
-  { id: 18, category: "finance", label: "Raise a round" },
-  { id: 19, category: "team", label: "Build the culture" },
-  { id: 20, category: "growth", label: "Scale up" },
-];
+export const QUESTION_BANK: Question[] = [
+  /* ---------------------------- EASY ------------------------------- */
+  {
+    id: "easy-1",
+    difficulty: "easy",
+    prompt: "What is a business plan mainly used for?",
+    options: [
+      "Decorating the office",
+      "Describing how the business will make money and reach its goals",
+      "Paying taxes",
+      "Hiring interns",
+    ],
+    answerIndex: 1,
+    explanation:
+      "A business plan sets out the model, market, operations and finances so the team and investors share one picture.",
+  },
+  {
+    id: "easy-2",
+    difficulty: "easy",
+    prompt: 'What does "revenue" mean?',
+    options: [
+      "Money left after all costs",
+      "Total money earned from sales before costs",
+      "Money borrowed from a bank",
+      "The value of the founders’ shares",
+    ],
+    answerIndex: 1,
+    explanation:
+      "Revenue is top-line sales. Profit is what survives the costs.",
+  },
+  {
+    id: "easy-3",
+    difficulty: "easy",
+    prompt: 'Who is a "target customer"?',
+    options: [
+      "Anyone who might one day buy anything",
+      "The specific group whose problem your product solves best",
+      "Your investors",
+      "Your suppliers",
+    ],
+    answerIndex: 1,
+    explanation:
+      "Naming a narrow target makes marketing cheaper and the product sharper.",
+  },
+  {
+    id: "easy-4",
+    difficulty: "easy",
+    prompt: "What is an MVP?",
+    options: [
+      "The most valuable person on the team",
+      "The smallest version of the product that tests the core idea with real users",
+      "A finished, fully featured product",
+      "A marketing video",
+    ],
+    answerIndex: 1,
+    explanation:
+      "A minimum viable product buys you evidence at the lowest possible cost.",
+  },
 
-export const QUESTIONS: Question[] = [
+  /* --------------------------- MEDIUM ------------------------------ */
   {
-    id: "idea-1",
-    category: "idea",
-    prompt: "What is the main purpose of a value proposition?",
+    id: "medium-1",
+    difficulty: "medium",
+    prompt: 'What does "runway" tell a founder?',
     options: [
-      "To describe the company’s legal structure",
-      "To state clearly which customer problem you solve and why it matters",
-      "To list every feature the product has",
-      "To set the annual revenue target",
+      "How long until the product launches",
+      "How many months the company can operate before it runs out of cash",
+      "Total money raised so far",
+      "The margin on each sale",
     ],
     answerIndex: 1,
     explanation:
-      "A value proposition names the customer, their problem, and the specific benefit your solution delivers.",
+      "Runway = cash ÷ net monthly burn. It is the clock every other decision runs against.",
   },
   {
-    id: "finance-1",
-    category: "finance",
-    prompt: 'What does "runway" mean for a startup?',
+    id: "medium-2",
+    difficulty: "medium",
+    prompt: "Why do co-founders normally agree on a vesting schedule?",
     options: [
-      "The time until the product launches",
-      "The number of months the company can operate before it runs out of cash",
-      "The total money raised so far",
-      "The profit margin on each sale",
+      "It is legally required everywhere",
+      "It guarantees equal ownership forever",
+      "It ties equity to time actually spent building the company",
+      "It lowers the company’s tax bill",
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
-      "Runway = cash in the bank ÷ net monthly burn. It tells you how long you have to reach the next milestone.",
+      "If someone leaves early their unvested shares return to the company, protecting those who stay.",
   },
   {
-    id: "market-1",
-    category: "market",
-    prompt: "Which is the strongest early signal of demand?",
+    id: "medium-3",
+    difficulty: "medium",
+    prompt: "Which is the strongest early signal of real demand?",
     options: [
-      "Lots of social media likes",
+      "A lot of social media likes",
       "Friends saying the idea sounds great",
-      "Customers paying for the product before it is finished",
+      "Customers paying before the product is finished",
       "A large addressable market on paper",
     ],
     answerIndex: 2,
-    explanation:
-      "Pre-payment is real commitment. Opinions are cheap; money is evidence.",
+    explanation: "Opinions are cheap. Pre-payment is commitment.",
   },
   {
-    id: "team-1",
-    category: "team",
-    prompt: "Why do founders usually agree on a vesting schedule?",
+    id: "medium-4",
+    difficulty: "medium",
+    prompt: "What does gross margin measure?",
     options: [
-      "It is legally required in every country",
-      "It guarantees equal ownership forever",
-      "It ties equity to time actually spent building the company",
-      "It reduces the company’s tax bill",
+      "Revenue minus the direct cost of delivering the product",
+      "Revenue minus all company expenses",
+      "Cash in the bank at year end",
+      "The company’s valuation",
     ],
-    answerIndex: 2,
+    answerIndex: 0,
     explanation:
-      "Vesting protects the remaining founders if someone leaves early, since unvested shares return to the company.",
+      "Gross margin shows whether the product itself is economically viable before overheads.",
   },
+
+  /* ---------------------------- HARD ------------------------------- */
   {
-    id: "risk-1",
-    category: "risk",
-    prompt: "What is the point of an NDA in early business talks?",
+    id: "hard-1",
+    difficulty: "hard",
+    prompt:
+      "A startup has a CAC of 120 and a customer lifetime value of 300. What does that ratio suggest?",
     options: [
-      "It transfers ownership of the idea",
-      "It legally restricts the other side from sharing information you disclose",
-      "It replaces a founders’ agreement",
-      "It registers your trademark",
+      "Acquisition is unsustainable and must stop",
+      "The unit economics work, so acquisition can likely be scaled",
+      "The company is already profitable",
+      "The company should immediately raise prices",
     ],
     answerIndex: 1,
     explanation:
-      "An NDA governs confidentiality only. Ownership needs assignment clauses or IP registration.",
+      "An LTV:CAC of 2.5:1 is workable; roughly 3:1 is the usual benchmark for confident scaling.",
   },
   {
-    id: "growth-1",
-    category: "growth",
+    id: "hard-2",
+    difficulty: "hard",
+    prompt:
+      "What is the main effect of a liquidation preference for investors?",
+    options: [
+      "It gives investors board control",
+      "It sets who gets paid first, and how much, when the company is sold",
+      "It fixes the share price of future rounds",
+      "It forces the founders to stay",
+    ],
+    answerIndex: 1,
+    explanation:
+      "Preferences reorder the exit waterfall. A 1x non-participating preference is the founder-friendly norm.",
+  },
+  {
+    id: "hard-3",
+    difficulty: "hard",
     prompt: "Product-market fit is best described as:",
     options: [
       "Having a finished product",
-      "A market that clearly pulls the product out of the company",
+      "A market that visibly pulls the product out of the company",
       "Being profitable",
       "Having raised venture funding",
     ],
     answerIndex: 1,
     explanation:
-      "At fit, demand outpaces your ability to serve it: usage, retention and word of mouth grow on their own.",
+      "At fit, retention and word of mouth grow faster than you can serve them; funding is an input, not proof.",
   },
   {
-    id: "chance-1",
-    category: "chance",
-    prompt: "A competitor just raised a huge round. What is the sane response?",
+    id: "hard-4",
+    difficulty: "hard",
+    prompt: "Why is a convertible note used instead of a priced round?",
     options: [
-      "Copy their roadmap immediately",
-      "Stay on your own strategy and keep talking to your customers",
-      "Cut prices to zero",
-      "Announce a pivot",
+      "It avoids agreeing on a valuation while still raising money now",
+      "It is always cheaper than equity",
+      "It gives investors no rights at all",
+      "It removes the need for legal documents",
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
-      "Funding is an input, not an outcome. Your customers, not their press release, should set your roadmap.",
+      "The note converts at the next priced round, usually with a discount or cap, deferring the valuation debate.",
   },
 ];
+
+export function questionsByDifficulty(difficulty: Difficulty): Question[] {
+  return QUESTION_BANK.filter((question) => question.difficulty === difficulty);
+}

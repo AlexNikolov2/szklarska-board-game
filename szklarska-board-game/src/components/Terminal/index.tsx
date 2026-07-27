@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { TERMINAL_THEME } from '@/game/theme'
 
 /* ---------------------------------------------------------------------
-   The START / FINISH discs that cap both ends of the snail path.
+   The round START / FINISH discs that cap both ends of the snake path.
    --------------------------------------------------------------------- */
 
 export type TerminalProps = React.ComponentProps<'div'> & {
@@ -12,13 +12,19 @@ export type TerminalProps = React.ComponentProps<'div'> & {
     label: string
 }
 
-export function Terminal({ kind, label, className, ...props }: TerminalProps) {
+export function Terminal({
+    kind,
+    label,
+    className,
+    children,
+    ...props
+}: TerminalProps) {
     return (
         <div
             data-slot="terminal"
             data-kind={kind}
             className={cn(
-                'flex size-square items-center justify-center rounded-full',
+                'relative flex size-square items-center justify-center rounded-full',
                 'border-[length:var(--square-border-width)] shadow-sm',
                 'text-xs font-extrabold tracking-wide uppercase',
                 TERMINAL_THEME[kind],
@@ -27,6 +33,7 @@ export function Terminal({ kind, label, className, ...props }: TerminalProps) {
             {...props}
         >
             {label}
+            {children}
         </div>
     )
 }

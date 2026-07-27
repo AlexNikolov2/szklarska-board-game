@@ -1,19 +1,18 @@
 import * as React from 'react'
 import { Moon, Sun } from 'lucide-react'
 
+import { ActionDialog } from '@/components/Action'
 import { Board } from '@/components/Board'
 import { Legend } from '@/components/Legend'
-import { Pawn } from '@/components/Pawn'
-import { QuestionDialog } from '@/components/Question'
+import { QuestionDialog, type QuestionPhase } from '@/components/Question'
+import { Scoreboard } from '@/components/Scoreboard'
+import { TurnControls } from '@/components/TurnControls'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { BOARD_SQUARES, QUESTIONS } from '@/game/content'
-import type { BoardSquare, Player } from '@/game/types'
+import { useGame } from '@/hooks/useGame'
+import { activePlayer } from '@/game/engine'
 
-const DEMO_PLAYERS: Player[] = [
-  { id: 'p1', name: 'Founder A', position: 2 },
-  { id: 'p2', name: 'Founder B', position: 5 },
-]
+const PLAYER_NAMES = ['Founder A', 'Founder B']
 
 /** Board scale presets — each one just rewrites the --square-size token. */
 const SCALES = [
@@ -22,12 +21,14 @@ const SCALES = [
   { label: 'Large', value: '6.75rem' },
 ]
 
+const QUESTION_PHASES: QuestionPhase[] = [
+  'question-difficulty',
+  'question-answer',
+  'question-bonus-roll',
+]
+
 export default function App() {
-  const [players, setPlayers] = React.useState(DEMO_PLAYERS)
-  const [activeSquare, setActiveSquare] = React.useState<BoardSquare | null>(
-    null,
-  )
-  const [completed, setCompleted] = React.useState<number[]>([])
+  const game = useGame(PLAYER_NAMES)
   const [dark, setDark] = React.useState(false)
   const [scale, setScale] = React.useState(SCALES[1].value)
 
@@ -39,29 +40,11 @@ export default function App() {
     document.documentElement.style.setProperty('--square-size', scale)
   }, [scale])
 
-  const question =
-    QUESTIONS.find((q) => q.category === activeSquare?.category) ?? null
-
-  function handleResolved(correct: boolean) {
-    if (!activeSquare) return
-    if (correct) {
-      setCompleted((prev) => [...prev, activeSquare.id])
-      setPlayers((prev) =>
-        prev.map((player, index) =>
-          index === 0
-            ? {
-              ...player,
-              position: Math.min(
-                BOARD_SQUARES.length - 1,
-                activeSquare.id + (activeSquare.bonus ?? 0) + 1,
-              ),
-            }
-            : player,
-        ),
-      )
-    }
-    setActiveSquare(null)
-  }
+  const { state } = game
+  const player = activePlayer(state)
+  const questionPhase = QUESTION_PHASES.includes(state.phase as QuestionPhase)
+    ? (state.phase as QuestionPhase)
+    : null
 
   return (
     <div className="min-h-svh px-4 py-8 sm:px-8">
@@ -69,17 +52,11 @@ export default function App() {
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
-              Design system preview
+              Entrepreneurship board game
             </p>
-            <h1 className="text-3xl font-bold tracking-tight">
-              Entrepreneurship Snail Board
-            </h1>
+            <h1 className="text-3xl font-bold tracking-tight">Snake Board</h1>
             <p className="text-muted-foreground mt-1 text-sm">
-              Every colour, size and radius on this page is a token in{' '}
-              <code className="bg-muted rounded px-1 py-0.5 text-xs">
-                src/index.css
-              </code>
-              .
+              Base, question and action squares are reshuffled every game.
             </p>
           </div>
 
@@ -108,20 +85,23 @@ export default function App() {
         </header>
 
         <Board
-          squares={BOARD_SQUARES}
-          players={players}
-          completedSquareIds={completed}
-          activeSquareId={activeSquare?.id ?? null}
-          onSquareSelect={setActiveSquare}
+          squares={state.squares}
+          players={state.players}
+          activeSquareId={player.position >= 0 ? player.position : null}
         />
 
-        <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
+        <div className="grid gap-4 lg:grid-cols-3">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Categories</CardTitle>
+              <CardTitle className="text-base">Current turn</CardTitle>
             </CardHeader>
             <CardContent>
-              <Legend />
+              <TurnControls
+                state={state}
+                onRoll={game.roll}
+                onEndTurn={game.endTurn}
+                onNewGame={game.newGame}
+              />
             </CardContent>
           </Card>
 
@@ -130,30 +110,59 @@ export default function App() {
               <CardTitle className="text-base">Players</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="flex flex-col gap-3">
-                {players.map((player, index) => (
-                  <li
-                    key={player.id}
-                    className="flex items-center gap-3 text-sm"
-                  >
-                    <Pawn seat={index} name={player.name} />
-                    <span className="font-medium">{player.name}</span>
-                    <span className="text-muted-foreground ml-auto text-xs">
-                      Square {player.position + 1}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <Scoreboard players={state.players} activePlayerId={player.id} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Square kinds</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Legend />
             </CardContent>
           </Card>
         </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Game log</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {state.log.length === 0 ? (
+              <p className="text-muted-foreground text-sm">
+                Roll the dice to start.
+              </p>
+            ) : (
+              <ol className="flex flex-col gap-1 text-sm">
+                {state.log.slice(0, 8).map((entry) => (
+                  <li key={entry.id} className="text-muted-foreground">
+                    <span className="text-foreground font-medium">
+                      {state.players.find((p) => p.id === entry.playerId)?.name}
+                    </span>{' '}
+                    {entry.message}
+                  </li>
+                ))}
+              </ol>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       <QuestionDialog
-        question={question}
-        open={activeSquare !== null}
-        onOpenChange={(open) => !open && setActiveSquare(null)}
-        onResolved={handleResolved}
+        phase={questionPhase}
+        question={state.pendingQuestion}
+        onChooseDifficulty={game.chooseDifficulty}
+        onAnswer={game.answer}
+        onBonusRoll={game.bonusRoll}
+      />
+
+      <ActionDialog
+        open={state.phase === 'action'}
+        player={player}
+        onBuyProperty={game.buyProperty}
+        onBuyShares={game.buyShares}
+        onDecline={game.decline}
       />
     </div>
   )

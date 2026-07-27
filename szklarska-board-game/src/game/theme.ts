@@ -1,13 +1,19 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Coins,
-  Lightbulb,
-  Megaphone,
-  ShieldAlert,
-  Sparkles,
-  TrendingUp,
-  Users,
+  Building2,
+  Cpu,
+  Dumbbell,
+  Footprints,
+  Handshake,
+  Hotel,
+  House,
+  CircleHelp,
+  Rocket,
+  Wheat,
 } from "lucide-react";
+
+import { RULES } from "./rules";
+import type { CompanyId, Difficulty, PropertyId, SquareKind } from "./types";
 
 /* =====================================================================
    GAME THEME
@@ -15,96 +21,94 @@ import {
    The semantic layer of the design system. Colours themselves live in
    src/index.css as CSS variables; this file only decides WHICH token a
    given game concept uses. To re-skin: edit index.css. To re-map a
-   category to a different token or icon: edit this file.
+   concept to a different token or icon: edit this file.
    ===================================================================== */
 
-export const SQUARE_CATEGORIES = [
-  "idea",
-  "finance",
-  "market",
-  "team",
-  "risk",
-  "growth",
-  "chance",
-] as const;
-
-export type SquareCategory = (typeof SQUARE_CATEGORIES)[number];
-
-export type CategoryTheme = {
-  /** Human readable name shown in the legend and question dialog. */
+export type SurfaceTheme = {
   label: string;
-  /** One-liner used as the dialog subtitle. */
   description: string;
   icon: LucideIcon;
   /** Tile surface: background + foreground + border tokens. */
   tile: string;
-  /** Small colour chip used in the legend. */
+  /** Small colour chip used in legends. */
   swatch: string;
-  /** Accent text colour, used for the question dialog heading. */
+  /** Accent text colour for headings. */
   accent: string;
 };
 
-export const CATEGORY_THEME: Record<SquareCategory, CategoryTheme> = {
-  idea: {
-    label: "Idea & Innovation",
-    description: "Spot the opportunity and shape the value proposition.",
-    icon: Lightbulb,
-    tile: "bg-cat-idea text-cat-idea-fg border-cat-idea-border",
-    swatch: "bg-cat-idea border-cat-idea-border",
-    accent: "text-cat-idea-fg",
+export const SQUARE_KIND_THEME: Record<SquareKind, SurfaceTheme> = {
+  base: {
+    label: "Base",
+    description: "Nothing happens here — but you only move 1 square next turn.",
+    icon: Footprints,
+    tile: "bg-kind-base text-kind-base-fg border-kind-base-border",
+    swatch: "bg-kind-base border-kind-base-border",
+    accent: "text-kind-base-fg",
   },
-  finance: {
-    label: "Finance & Funding",
-    description: "Runway, unit economics and where the money comes from.",
-    icon: Coins,
-    tile: "bg-cat-finance text-cat-finance-fg border-cat-finance-border",
-    swatch: "bg-cat-finance border-cat-finance-border",
-    accent: "text-cat-finance-fg",
+  question: {
+    label: "Question",
+    description: "Pick a difficulty, answer it, then roll for a free move.",
+    icon: CircleHelp,
+    tile: "bg-kind-question text-kind-question-fg border-kind-question-border",
+    swatch: "bg-kind-question border-kind-question-border",
+    accent: "text-kind-question-fg",
   },
-  market: {
-    label: "Market & Customers",
-    description: "Who you serve, and how they find out about you.",
-    icon: Megaphone,
-    tile: "bg-cat-market text-cat-market-fg border-cat-market-border",
-    swatch: "bg-cat-market border-cat-market-border",
-    accent: "text-cat-market-fg",
-  },
-  team: {
-    label: "Team & Leadership",
-    description: "Hiring, culture and the decisions only founders make.",
-    icon: Users,
-    tile: "bg-cat-team text-cat-team-fg border-cat-team-border",
-    swatch: "bg-cat-team border-cat-team-border",
-    accent: "text-cat-team-fg",
-  },
-  risk: {
-    label: "Risk & Legal",
-    description: "Contracts, compliance and the things that can sink you.",
-    icon: ShieldAlert,
-    tile: "bg-cat-risk text-cat-risk-fg border-cat-risk-border",
-    swatch: "bg-cat-risk border-cat-risk-border",
-    accent: "text-cat-risk-fg",
-  },
-  growth: {
-    label: "Growth & Scale",
-    description: "Turning something that works into something bigger.",
-    icon: TrendingUp,
-    tile: "bg-cat-growth text-cat-growth-fg border-cat-growth-border",
-    swatch: "bg-cat-growth border-cat-growth-border",
-    accent: "text-cat-growth-fg",
-  },
-  chance: {
-    label: "Chance",
-    description: "The market does what it wants. Draw and find out.",
-    icon: Sparkles,
-    tile: "bg-cat-chance text-cat-chance-fg border-cat-chance-border",
-    swatch: "bg-cat-chance border-cat-chance-border",
-    accent: "text-cat-chance-fg",
+  action: {
+    label: "Action",
+    description: "Buy a property or invest in a company.",
+    icon: Handshake,
+    tile: "bg-kind-action text-kind-action-fg border-kind-action-border",
+    swatch: "bg-kind-action border-kind-action-border",
+    accent: "text-kind-action-fg",
   },
 };
 
+export type DifficultyTheme = {
+  label: string;
+  tile: string;
+  accent: string;
+};
+
+export const DIFFICULTY_THEME: Record<Difficulty, DifficultyTheme> = {
+  easy: {
+    label: "Easy",
+    tile: "bg-level-easy text-level-easy-fg border-level-easy-border",
+    accent: "text-level-easy-fg",
+  },
+  medium: {
+    label: "Medium",
+    tile: "bg-level-medium text-level-medium-fg border-level-medium-border",
+    accent: "text-level-medium-fg",
+  },
+  hard: {
+    label: "Hard",
+    tile: "bg-level-hard text-level-hard-fg border-level-hard-border",
+    accent: "text-level-hard-fg",
+  },
+};
+
+export const PROPERTY_ICON: Record<PropertyId, LucideIcon> = {
+  apartment: House,
+  gym: Dumbbell,
+  hotel: Hotel,
+  office: Building2,
+};
+
+export const COMPANY_ICON: Record<CompanyId, LucideIcon> = {
+  alpha: Rocket,
+  beta: Cpu,
+  gamma: Wheat,
+};
+
+/** Surfaces for the two halves of an action square's offer. */
+export const ASSET_THEME = {
+  property:
+    "bg-asset-property text-asset-property-fg border-asset-property-border",
+  company: "bg-asset-company text-asset-company-fg border-asset-company-border",
+} as const;
+
 /* ---------------------------------------------------------------------
-   Terminals (START / FINISH) use their own tokens rather than a category.
+   Terminals (START / FINISH) use their own tokens.
    --------------------------------------------------------------------- */
 export const TERMINAL_THEME = {
   start: "bg-start text-start-fg border-start-border",
@@ -112,7 +116,7 @@ export const TERMINAL_THEME = {
 } as const;
 
 /* ---------------------------------------------------------------------
-   Pawn colours, indexed by player order.
+   Pawn colours, indexed by seat.
    --------------------------------------------------------------------- */
 export const PAWN_THEME = [
   "bg-pawn-1",
@@ -123,11 +127,11 @@ export const PAWN_THEME = [
 
 /* ---------------------------------------------------------------------
    Board geometry. Sizes come from --square-size / --square-gap in CSS;
-   only structural choices live here.
+   the shape comes from RULES.board.
    --------------------------------------------------------------------- */
 export const BOARD_CONFIG = {
-  /** Tiles per row before the path turns and reverses direction. */
-  columns: 7,
+  columns: RULES.board.columns,
+  rows: RULES.board.rows,
   startLabel: "START",
   finishLabel: "FINISH",
 } as const;

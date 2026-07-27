@@ -56,34 +56,40 @@
   --finish-fg: oklch(0.32 0.1 60);
   --finish-border: oklch(0.6 0.16 70);
 
-  /* ---- Entrepreneurship categories ------------------------------------ */
-  --cat-idea: oklch(0.93 0.09 300);
-  --cat-idea-fg: oklch(0.32 0.11 300);
-  --cat-idea-border: oklch(0.6 0.16 300);
+  /* ---- Square kinds (base / question / action) -------------------------- */
+  --kind-base: oklch(0.96 0.012 265);
+  --kind-base-fg: oklch(0.42 0.02 265);
+  --kind-base-border: oklch(0.72 0.02 265);
 
-  --cat-finance: oklch(0.93 0.09 165);
-  --cat-finance-fg: oklch(0.3 0.09 165);
-  --cat-finance-border: oklch(0.58 0.14 165);
+  --kind-question: oklch(0.93 0.09 235);
+  --kind-question-fg: oklch(0.3 0.11 250);
+  --kind-question-border: oklch(0.58 0.16 245);
 
-  --cat-market: oklch(0.93 0.09 235);
-  --cat-market-fg: oklch(0.3 0.11 250);
-  --cat-market-border: oklch(0.58 0.16 245);
+  --kind-action: oklch(0.94 0.09 60);
+  --kind-action-fg: oklch(0.34 0.1 50);
+  --kind-action-border: oklch(0.64 0.16 60);
 
-  --cat-team: oklch(0.94 0.09 40);
-  --cat-team-fg: oklch(0.34 0.1 35);
-  --cat-team-border: oklch(0.62 0.16 40);
+  /* ---- Question difficulty --------------------------------------------- */
+  --level-easy: oklch(0.93 0.1 145);
+  --level-easy-fg: oklch(0.3 0.1 145);
+  --level-easy-border: oklch(0.58 0.15 145);
 
-  --cat-risk: oklch(0.93 0.08 20);
-  --cat-risk-fg: oklch(0.35 0.13 22);
-  --cat-risk-border: oklch(0.6 0.18 22);
+  --level-medium: oklch(0.94 0.1 85);
+  --level-medium-fg: oklch(0.36 0.11 65);
+  --level-medium-border: oklch(0.66 0.16 80);
 
-  --cat-growth: oklch(0.93 0.1 130);
-  --cat-growth-fg: oklch(0.3 0.1 135);
-  --cat-growth-border: oklch(0.58 0.15 135);
+  --level-hard: oklch(0.93 0.08 20);
+  --level-hard-fg: oklch(0.35 0.13 22);
+  --level-hard-border: oklch(0.6 0.18 22);
 
-  --cat-chance: oklch(0.94 0.05 265);
-  --cat-chance-fg: oklch(0.32 0.06 265);
-  --cat-chance-border: oklch(0.6 0.1 265);
+  /* ---- Asset families --------------------------------------------------- */
+  --asset-property: oklch(0.94 0.07 300);
+  --asset-property-fg: oklch(0.33 0.11 300);
+  --asset-property-border: oklch(0.62 0.15 300);
+
+  --asset-company: oklch(0.93 0.08 190);
+  --asset-company-fg: oklch(0.3 0.09 200);
+  --asset-company-border: oklch(0.58 0.13 195);
 
   /* ---- Player pawns ---------------------------------------------------- */
   --pawn-1: oklch(0.62 0.2 25);
@@ -127,20 +133,32 @@
   --finish-fg: oklch(0.95 0.06 85);
   --finish-border: oklch(0.68 0.16 75);
 
-  --cat-idea: oklch(0.34 0.09 300);
-  --cat-idea-fg: oklch(0.93 0.06 300);
-  --cat-finance: oklch(0.32 0.08 165);
-  --cat-finance-fg: oklch(0.92 0.07 165);
-  --cat-market: oklch(0.32 0.09 240);
-  --cat-market-fg: oklch(0.93 0.06 240);
-  --cat-team: oklch(0.34 0.09 40);
-  --cat-team-fg: oklch(0.94 0.06 45);
-  --cat-risk: oklch(0.34 0.1 22);
-  --cat-risk-fg: oklch(0.93 0.06 22);
-  --cat-growth: oklch(0.32 0.09 135);
-  --cat-growth-fg: oklch(0.93 0.07 135);
-  --cat-chance: oklch(0.3 0.04 265);
-  --cat-chance-fg: oklch(0.93 0.03 265);
+  --kind-base: oklch(0.29 0.015 265);
+  --kind-base-fg: oklch(0.86 0.01 265);
+  --kind-base-border: oklch(1 0 0 / 22%);
+  --kind-question: oklch(0.32 0.09 240);
+  --kind-question-fg: oklch(0.93 0.06 240);
+  --kind-question-border: oklch(0.55 0.14 240);
+  --kind-action: oklch(0.35 0.09 60);
+  --kind-action-fg: oklch(0.94 0.06 65);
+  --kind-action-border: oklch(0.62 0.14 60);
+
+  --level-easy: oklch(0.33 0.09 145);
+  --level-easy-fg: oklch(0.93 0.07 145);
+  --level-easy-border: oklch(0.56 0.14 145);
+  --level-medium: oklch(0.36 0.09 80);
+  --level-medium-fg: oklch(0.95 0.07 85);
+  --level-medium-border: oklch(0.64 0.14 80);
+  --level-hard: oklch(0.34 0.1 22);
+  --level-hard-fg: oklch(0.93 0.06 22);
+  --level-hard-border: oklch(0.6 0.16 22);
+
+  --asset-property: oklch(0.33 0.08 300);
+  --asset-property-fg: oklch(0.93 0.06 300);
+  --asset-property-border: oklch(0.58 0.13 300);
+  --asset-company: oklch(0.31 0.07 195);
+  --asset-company-fg: oklch(0.93 0.06 195);
+  --asset-company-border: oklch(0.56 0.11 195);
 }
 
 /* =====================================================================
@@ -190,27 +208,32 @@
   --color-finish-fg: var(--finish-fg);
   --color-finish-border: var(--finish-border);
 
-  --color-cat-idea: var(--cat-idea);
-  --color-cat-idea-fg: var(--cat-idea-fg);
-  --color-cat-idea-border: var(--cat-idea-border);
-  --color-cat-finance: var(--cat-finance);
-  --color-cat-finance-fg: var(--cat-finance-fg);
-  --color-cat-finance-border: var(--cat-finance-border);
-  --color-cat-market: var(--cat-market);
-  --color-cat-market-fg: var(--cat-market-fg);
-  --color-cat-market-border: var(--cat-market-border);
-  --color-cat-team: var(--cat-team);
-  --color-cat-team-fg: var(--cat-team-fg);
-  --color-cat-team-border: var(--cat-team-border);
-  --color-cat-risk: var(--cat-risk);
-  --color-cat-risk-fg: var(--cat-risk-fg);
-  --color-cat-risk-border: var(--cat-risk-border);
-  --color-cat-growth: var(--cat-growth);
-  --color-cat-growth-fg: var(--cat-growth-fg);
-  --color-cat-growth-border: var(--cat-growth-border);
-  --color-cat-chance: var(--cat-chance);
-  --color-cat-chance-fg: var(--cat-chance-fg);
-  --color-cat-chance-border: var(--cat-chance-border);
+  --color-kind-base: var(--kind-base);
+  --color-kind-base-fg: var(--kind-base-fg);
+  --color-kind-base-border: var(--kind-base-border);
+  --color-kind-question: var(--kind-question);
+  --color-kind-question-fg: var(--kind-question-fg);
+  --color-kind-question-border: var(--kind-question-border);
+  --color-kind-action: var(--kind-action);
+  --color-kind-action-fg: var(--kind-action-fg);
+  --color-kind-action-border: var(--kind-action-border);
+
+  --color-level-easy: var(--level-easy);
+  --color-level-easy-fg: var(--level-easy-fg);
+  --color-level-easy-border: var(--level-easy-border);
+  --color-level-medium: var(--level-medium);
+  --color-level-medium-fg: var(--level-medium-fg);
+  --color-level-medium-border: var(--level-medium-border);
+  --color-level-hard: var(--level-hard);
+  --color-level-hard-fg: var(--level-hard-fg);
+  --color-level-hard-border: var(--level-hard-border);
+
+  --color-asset-property: var(--asset-property);
+  --color-asset-property-fg: var(--asset-property-fg);
+  --color-asset-property-border: var(--asset-property-border);
+  --color-asset-company: var(--asset-company);
+  --color-asset-company-fg: var(--asset-company-fg);
+  --color-asset-company-border: var(--asset-company-border);
 
   --color-pawn-1: var(--pawn-1);
   --color-pawn-2: var(--pawn-2);
