@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { Square, type SquareState } from '@/components/Square'
 import { Terminal } from '@/components/Terminal'
 import { Pawn } from '@/components/Pawn'
-import { BOARD_CONFIG } from '@/game/theme'
+import { BOARD_CONFIG } from '../../game/theme'
 import {
     getFinishPlacement,
     getGridColumnCount,
@@ -10,7 +10,7 @@ import {
     getRowCount,
     getStartPlacement,
 } from '@/game/layout'
-import type { BoardSquare, Player } from '@/game/types'
+import type { BoardSquare, Player } from '../../game/types'
 
 /* ---------------------------------------------------------------------
    The board: a snake path laid out on a CSS grid — right, up, left, up,

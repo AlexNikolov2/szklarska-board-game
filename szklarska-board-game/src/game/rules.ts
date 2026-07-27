@@ -1,4 +1,4 @@
-import type { Difficulty, SquareKind } from "./types";
+import type { Difficulty, SquareKind } from "./types.ts";
 
 /* =====================================================================
    RULES
@@ -46,7 +46,7 @@ export const RULES = {
 
   player: {
     /** Points everyone starts the game with. */
-    startingPoints: 10,
+    startingPoints: 0,
   },
 } as const;
 
