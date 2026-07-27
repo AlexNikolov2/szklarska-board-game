@@ -1,0 +1,239 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =====================================================================
+   DESIGN TOKENS
+   ---------------------------------------------------------------------
+   Everything visual is driven from here. Change a value in :root and the
+   whole game re-skins itself. Avoid hard-coding colours/sizes in JSX.
+   ===================================================================== */
+
+:root {
+  /* ---- Global shape / rhythm -------------------------------------- */
+  --radius: 0.75rem;
+
+  /* ---- shadcn base palette (app chrome) --------------------------- */
+  --background: oklch(0.985 0.006 95);
+  --foreground: oklch(0.21 0.03 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.03 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.03 265);
+  --primary: oklch(0.55 0.19 258);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.01 260);
+  --secondary-foreground: oklch(0.28 0.04 265);
+  --muted: oklch(0.96 0.01 260);
+  --muted-foreground: oklch(0.55 0.02 265);
+  --accent: oklch(0.95 0.05 95);
+  --accent-foreground: oklch(0.3 0.06 60);
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.9 0.01 265);
+  --input: oklch(0.9 0.01 265);
+  --ring: oklch(0.55 0.19 258);
+
+  /* ---- Board surface ----------------------------------------------- */
+  --board-bg: oklch(0.99 0.008 95);
+  --board-grid: oklch(0.93 0.01 265);
+
+  /* ---- Square anatomy ----------------------------------------------- */
+  --square-size: 5.5rem; /* one tile edge - drives the whole board scale */
+  --square-gap: 0.375rem;
+  --square-radius: 0.5rem;
+  --square-border-width: 2px;
+  --square-bg: oklch(1 0 0);
+  --square-fg: oklch(0.25 0.03 265);
+  --square-border: oklch(0.2 0.02 265);
+
+  /* ---- Terminals ----------------------------------------------------- */
+  --start-bg: oklch(0.93 0.14 145);
+  --start-fg: oklch(0.28 0.09 145);
+  --start-border: oklch(0.55 0.16 145);
+  --finish-bg: oklch(0.93 0.13 85);
+  --finish-fg: oklch(0.32 0.1 60);
+  --finish-border: oklch(0.6 0.16 70);
+
+  /* ---- Entrepreneurship categories ------------------------------------ */
+  --cat-idea: oklch(0.93 0.09 300);
+  --cat-idea-fg: oklch(0.32 0.11 300);
+  --cat-idea-border: oklch(0.6 0.16 300);
+
+  --cat-finance: oklch(0.93 0.09 165);
+  --cat-finance-fg: oklch(0.3 0.09 165);
+  --cat-finance-border: oklch(0.58 0.14 165);
+
+  --cat-market: oklch(0.93 0.09 235);
+  --cat-market-fg: oklch(0.3 0.11 250);
+  --cat-market-border: oklch(0.58 0.16 245);
+
+  --cat-team: oklch(0.94 0.09 40);
+  --cat-team-fg: oklch(0.34 0.1 35);
+  --cat-team-border: oklch(0.62 0.16 40);
+
+  --cat-risk: oklch(0.93 0.08 20);
+  --cat-risk-fg: oklch(0.35 0.13 22);
+  --cat-risk-border: oklch(0.6 0.18 22);
+
+  --cat-growth: oklch(0.93 0.1 130);
+  --cat-growth-fg: oklch(0.3 0.1 135);
+  --cat-growth-border: oklch(0.58 0.15 135);
+
+  --cat-chance: oklch(0.94 0.05 265);
+  --cat-chance-fg: oklch(0.32 0.06 265);
+  --cat-chance-border: oklch(0.6 0.1 265);
+
+  /* ---- Player pawns ---------------------------------------------------- */
+  --pawn-1: oklch(0.62 0.2 25);
+  --pawn-2: oklch(0.6 0.17 250);
+  --pawn-3: oklch(0.65 0.17 145);
+  --pawn-4: oklch(0.75 0.16 85);
+}
+
+.dark {
+  --background: oklch(0.17 0.02 265);
+  --foreground: oklch(0.97 0.005 265);
+  --card: oklch(0.22 0.02 265);
+  --card-foreground: oklch(0.97 0.005 265);
+  --popover: oklch(0.22 0.02 265);
+  --popover-foreground: oklch(0.97 0.005 265);
+  --primary: oklch(0.7 0.15 258);
+  --primary-foreground: oklch(0.18 0.03 265);
+  --secondary: oklch(0.28 0.02 265);
+  --secondary-foreground: oklch(0.97 0.005 265);
+  --muted: oklch(0.28 0.02 265);
+  --muted-foreground: oklch(0.72 0.02 265);
+  --accent: oklch(0.3 0.04 95);
+  --accent-foreground: oklch(0.96 0.02 95);
+  --destructive: oklch(0.66 0.2 25);
+  --destructive-foreground: oklch(0.15 0.02 265);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.7 0.15 258);
+
+  --board-bg: oklch(0.2 0.02 265);
+  --board-grid: oklch(1 0 0 / 10%);
+
+  --square-bg: oklch(0.26 0.02 265);
+  --square-fg: oklch(0.95 0.01 265);
+  --square-border: oklch(1 0 0 / 25%);
+
+  --start-bg: oklch(0.35 0.1 145);
+  --start-fg: oklch(0.94 0.06 145);
+  --start-border: oklch(0.6 0.16 145);
+  --finish-bg: oklch(0.38 0.1 75);
+  --finish-fg: oklch(0.95 0.06 85);
+  --finish-border: oklch(0.68 0.16 75);
+
+  --cat-idea: oklch(0.34 0.09 300);
+  --cat-idea-fg: oklch(0.93 0.06 300);
+  --cat-finance: oklch(0.32 0.08 165);
+  --cat-finance-fg: oklch(0.92 0.07 165);
+  --cat-market: oklch(0.32 0.09 240);
+  --cat-market-fg: oklch(0.93 0.06 240);
+  --cat-team: oklch(0.34 0.09 40);
+  --cat-team-fg: oklch(0.94 0.06 45);
+  --cat-risk: oklch(0.34 0.1 22);
+  --cat-risk-fg: oklch(0.93 0.06 22);
+  --cat-growth: oklch(0.32 0.09 135);
+  --cat-growth-fg: oklch(0.93 0.07 135);
+  --cat-chance: oklch(0.3 0.04 265);
+  --cat-chance-fg: oklch(0.93 0.03 265);
+}
+
+/* =====================================================================
+   TOKEN -> TAILWIND UTILITY BRIDGE
+   Every variable above becomes a real utility: bg-cat-idea, text-square-fg,
+   border-start-border, size-square, rounded-square, gap-square-gap, ...
+   ===================================================================== */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-square: var(--square-radius);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-board: var(--board-bg);
+  --color-board-grid: var(--board-grid);
+
+  --color-square: var(--square-bg);
+  --color-square-fg: var(--square-fg);
+  --color-square-border: var(--square-border);
+
+  --color-start: var(--start-bg);
+  --color-start-fg: var(--start-fg);
+  --color-start-border: var(--start-border);
+  --color-finish: var(--finish-bg);
+  --color-finish-fg: var(--finish-fg);
+  --color-finish-border: var(--finish-border);
+
+  --color-cat-idea: var(--cat-idea);
+  --color-cat-idea-fg: var(--cat-idea-fg);
+  --color-cat-idea-border: var(--cat-idea-border);
+  --color-cat-finance: var(--cat-finance);
+  --color-cat-finance-fg: var(--cat-finance-fg);
+  --color-cat-finance-border: var(--cat-finance-border);
+  --color-cat-market: var(--cat-market);
+  --color-cat-market-fg: var(--cat-market-fg);
+  --color-cat-market-border: var(--cat-market-border);
+  --color-cat-team: var(--cat-team);
+  --color-cat-team-fg: var(--cat-team-fg);
+  --color-cat-team-border: var(--cat-team-border);
+  --color-cat-risk: var(--cat-risk);
+  --color-cat-risk-fg: var(--cat-risk-fg);
+  --color-cat-risk-border: var(--cat-risk-border);
+  --color-cat-growth: var(--cat-growth);
+  --color-cat-growth-fg: var(--cat-growth-fg);
+  --color-cat-growth-border: var(--cat-growth-border);
+  --color-cat-chance: var(--cat-chance);
+  --color-cat-chance-fg: var(--cat-chance-fg);
+  --color-cat-chance-border: var(--cat-chance-border);
+
+  --color-pawn-1: var(--pawn-1);
+  --color-pawn-2: var(--pawn-2);
+  --color-pawn-3: var(--pawn-3);
+  --color-pawn-4: var(--pawn-4);
+
+  --spacing-square: var(--square-size);
+  --spacing-square-gap: var(--square-gap);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    margin: 0;
+    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+}
