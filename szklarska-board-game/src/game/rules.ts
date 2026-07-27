@@ -29,6 +29,11 @@ export const RULES = {
     forcedSteps: 1,
   },
 
+  /** Action square: you trade instead of rolling, then hop like a base square. */
+  action: {
+    forcedSteps: 1,
+  },
+
   question: {
     /** Points awarded for a correct answer, by difficulty. */
     reward: {

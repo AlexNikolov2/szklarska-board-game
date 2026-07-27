@@ -14,7 +14,7 @@ import type { BoardSquare } from '@/game/types'
 const squareVariants = cva(
     [
         'group relative flex size-square flex-col items-center justify-center gap-1',
-        'rounded-square border-[length:var(--square-border-width)] p-1.5 text-center',
+        'rounded-square border-(length:--square-border-width) p-1.5 text-center',
         'transition-[transform,box-shadow,opacity] duration-150 outline-none',
         'focus-visible:ring-[3px] focus-visible:ring-ring/50',
     ],

@@ -55,7 +55,8 @@ export const SQUARE_KIND_THEME: Record<SquareKind, SurfaceTheme> = {
   },
   action: {
     label: "Action",
-    description: "Buy a property or invest in a company.",
+    description:
+      "Buy a property or invest in a company — then move 1 square next turn.",
     icon: Handshake,
     tile: "bg-kind-action text-kind-action-fg border-kind-action-border",
     swatch: "bg-kind-action border-kind-action-border",

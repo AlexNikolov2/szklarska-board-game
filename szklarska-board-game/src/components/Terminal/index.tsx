@@ -25,7 +25,7 @@ export function Terminal({
             data-kind={kind}
             className={cn(
                 'relative flex size-square items-center justify-center rounded-full',
-                'border-[length:var(--square-border-width)] shadow-sm',
+                'border-(length:--square-border-width) shadow-sm',
                 'text-xs font-extrabold tracking-wide uppercase',
                 TERMINAL_THEME[kind],
                 className,

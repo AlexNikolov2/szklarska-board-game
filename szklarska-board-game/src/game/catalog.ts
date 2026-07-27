@@ -32,8 +32,11 @@ export const COMPANY_BY_ID = Object.fromEntries(
   COMPANIES.map((company) => [company.id, company]),
 ) as Record<CompanyId, Company>;
 
-export const EMPTY_PORTFOLIO: Record<CompanyId, number> = {
-  alpha: 0,
-  beta: 0,
-  gamma: 0,
-};
+/** A fresh, unowned share portfolio. A factory so players never share one. */
+export function emptyPortfolio(): Record<CompanyId, number> {
+  return {
+    alpha: 0,
+    beta: 0,
+    gamma: 0,
+  };
+}

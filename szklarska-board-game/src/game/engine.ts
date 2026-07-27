@@ -1,4 +1,4 @@
-import { COMPANY_BY_ID, EMPTY_PORTFOLIO, PROPERTY_BY_ID } from "./catalog";
+import { COMPANY_BY_ID, emptyPortfolio, PROPERTY_BY_ID } from "./catalog";
 import { generateSquares } from "./generator";
 import { RULES } from "./rules";
 import type {
@@ -81,7 +81,7 @@ export function createPlayers(names: string[]): Player[] {
     position: -1,
     points: RULES.player.startingPoints,
     properties: [],
-    shares: { ...EMPTY_PORTFOLIO },
+    shares: emptyPortfolio(),
     pendingSteps: 0,
   }));
 }
@@ -202,8 +202,15 @@ function resolveLanding(state: GameState, allowQuestion: boolean): GameState {
         ? { ...state, phase: "question-difficulty" }
         : { ...state, phase: "turn-end" };
 
-    case "action":
-      return { ...state, phase: "action" };
+    case "action": {
+      // Trading replaces the dice: the next turn is the same short hop a
+      // base square hands out.
+      const next = updateActive(state, (p) => ({
+        ...p,
+        pendingSteps: RULES.action.forcedSteps,
+      }));
+      return { ...next, phase: "action" };
+    }
   }
 }
 
@@ -317,14 +324,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const cost = company.sharePrice * action.quantity;
       if (action.quantity < 1 || player.points < cost) return state;
 
-      const next = updateActive(state, (p) => ({
-        ...p,
-        points: p.points - cost,
-        shares: {
-          ...p.shares,
-          [company.id]: p.shares[company.id] + action.quantity,
-        },
-      }));
+      const next = updateActive(state, (p) => {
+        const shares = { ...p.shares };
+        shares[action.companyId] += action.quantity;
+        return { ...p, points: p.points - cost, shares };
+      });
 
       return {
         ...withLog(

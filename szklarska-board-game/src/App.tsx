@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useGame } from '@/hooks/useGame'
 import { activePlayer } from '@/game/engine'
+import logo from './assets/brand-logo.png'
 
 const PLAYER_NAMES = ['Founder A', 'Founder B']
 
@@ -51,13 +52,9 @@ export default function App() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
-              Entrepreneurship board game
-            </p>
-            <h1 className="text-3xl font-bold tracking-tight">Snake Board</h1>
-            <p className="text-muted-foreground mt-1 text-sm">
-              Base, question and action squares are reshuffled every game.
-            </p>
+            <picture>
+              <img src={logo} width={200} height={200} alt="Szklarska Board Game" />
+            </picture>
           </div>
 
           <div className="flex items-center gap-2">
